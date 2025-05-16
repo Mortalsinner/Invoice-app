@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import config from "../../supabase-config";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const AddSekolah = () => {
   const [namaSekolah, setNamaSekolah] = useState("");
   const [Harga, setHarga] = useState("");
-  const [StatusPembayaran, setStatusPembayaran] = useState("Lunas");
+  const [StatusPembayaran, setStatusPembayaran] = useState("Belum Lunas");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,12 +18,29 @@ const AddSekolah = () => {
         .from("Table_Sekolah")
         .insert([{ namaSekolah, Harga: Number(Harga), StatusPembayaran }]);
       if (error) throw error;
-      Swal.fire("Sukses", "Data sekolah berhasil ditambahkan!", "success");
+      await Swal.fire({
+        title: "Sukses",
+        text: "Data sekolah berhasil ditambahkan!",
+        icon: "success",
+        customClass: { 
+          confirmButton: 'bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700',
+        },
+        buttonsStyling: false
+      });
       setNamaSekolah("");
       setHarga("");
       setStatusPembayaran("Belum Lunas");
+      navigate("/ListSekolah");
     } catch (err) {
-      Swal.fire("Gagal", err.message, "error");
+      await Swal.fire({
+        title: "Gagal",
+        text: err.message,
+        icon: "error",
+        customClass: { 
+          confirmButton: 'bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700',
+        },
+        buttonsStyling: false
+      });
     }
     setLoading(false);
   };
@@ -51,18 +70,7 @@ const AddSekolah = () => {
             min={0}
           />
         </div>
-        <div>
-          <label className="block mb-1 font-semibold text-gray-700">Status Pembayaran</label>
-          <select
-            value={StatusPembayaran}
-            onChange={(e) => setStatusPembayaran(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10365B]"
-            required
-          >
-            <option value="Lunas">Lunas</option>
-            <option value="Belum Lunas">Belum Lunas</option>
-          </select>
-        </div>
+        
         <button
           type="submit"
           disabled={loading}

@@ -10,6 +10,7 @@ import Table from './Component/Table';
 import Sekolah from './PageSekolah/ListSekolah.jsx';
 import AddSekolah from './PageSekolah/AddSekolah.jsx';
 import Dashboard from './PageDashboard/Dashboard.jsx';
+import EditSekolah from './PageSekolah/EditSekolah.jsx';
 
 function HomeInvoice() {
   useEffect(() => {
@@ -24,6 +25,7 @@ function HomeInvoice() {
         <Route path="/" element={<Dashboard />} />
           <Route path="/ListSekolah" element={<Sekolah />} />
           <Route path="/AddSekolah" element={<AddSekolah />} />
+          <Route path="/EditSekolah/:Kode_Sekolah" element={<EditSekolah />} />
         </Routes>
       </div>
     </div>

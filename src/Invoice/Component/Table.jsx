@@ -1,18 +1,20 @@
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 import { useState, useEffect } from "react";
 // Update imports at the top
 import { jsPDF } from "jspdf";
 import autoTable from 'jspdf-autotable';
 import config from '../../supabase-config';
-import AddSekolah from '../PageSekolah/AddSekolah';
+
 
 
 const Table = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [sekolahData, setSekolahData] = useState([]);
+  const Swal = require('sweetalert2');
   const itemsPerPage = 10;
   const [loading, setLoading] = useState(true);
 
@@ -33,6 +35,43 @@ const Table = () => {
       setSekolahData([]);
     }
     setLoading(false);
+  }
+
+  async function handleDelete(kodeSekolah) {
+    const confirmDelete = await Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'Cancel',
+      customClass: {
+        confirmButton: 'bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700',
+        cancelButton: 'bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 ml-1',
+      },
+      buttonsStyling: false, // WAJIB false agar Tailwind bisa dipakai
+    });
+    if (!confirmDelete.isConfirmed) return;
+    try {
+      const { error } = await config
+        .from('Table_Sekolah')
+        .delete()
+        .eq('Kode_Sekolah', kodeSekolah);
+      if (error) throw error;
+      Swal.fire({
+        title: "Sukses",
+        text: "Data sekolah berhasil dihapus!",
+        icon: "success",
+        confirmButtonText: 'OK',
+        customClass: {
+          confirmButton: 'bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700'
+        },
+        buttonsStyling: false
+      });
+      fetchSekolah();
+    } catch (err) {
+      Swal.fire("Gagal", err.message, "error");
+    }
   }
 
   const filteredItems = sekolahData.filter(item =>
@@ -107,6 +146,7 @@ const Table = () => {
               <th className="py-3 px-4 font-semibold text-sm uppercase">Nama Sekolah</th>
               <th className="py-3 px-4 font-semibold text-sm uppercase">Harga</th>
               <th className="py-3 px-4 font-semibold text-sm uppercase">Status Pembayaran</th>
+              <th className="py-3 px-4 font-semibold text-sm uppercase">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -119,6 +159,21 @@ const Table = () => {
                   <span className={`px-3 py-1 rounded-full text-sm font-semibold ${item.StatusPembayaran === 'Lunas' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                     {item.StatusPembayaran}
                   </span>
+                </td>
+                <td className="p-3 text-center">
+                  <div className="flex justify-center gap-2">
+                    <Link to={`/EditSekolah/${item.Kode_Sekolah}`}>
+                      <button className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-gray-400 transition-colors">
+                        Edit
+                      </button>
+                    </Link>
+                    <button
+                      onClick={() => handleDelete(item.Kode_Sekolah)}
+                      className="px-3 py-1 bg-red-600 text-white rounded hover:bg-gray-400 transition-colors"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
