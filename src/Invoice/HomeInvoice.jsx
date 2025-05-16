@@ -7,8 +7,9 @@ import { useEffect } from 'react';
 import { supabase, testSupabaseConnection } from '../supabase-config.js';
 import Nav from './Component/Nav';
 import Table from './Component/Table';
-import Sekolah from './Page/ListSekolah.jsx';
-import AddSekolah from './Page/AddSekolah.jsx';
+import Sekolah from './PageSekolah/ListSekolah.jsx';
+import AddSekolah from './PageSekolah/AddSekolah.jsx';
+import Dashboard from './PageDashboard/Dashboard.jsx';
 
 function HomeInvoice() {
   useEffect(() => {
@@ -20,6 +21,7 @@ function HomeInvoice() {
       <Nav />
       <div className="flex-1 p-8 overflow-auto ">
         <Routes>
+        <Route path="/" element={<Dashboard />} />
           <Route path="/ListSekolah" element={<Sekolah />} />
           <Route path="/AddSekolah" element={<AddSekolah />} />
         </Routes>

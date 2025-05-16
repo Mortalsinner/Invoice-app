@@ -5,8 +5,8 @@ import { useEffect } from 'react';
 
 // Import File
 import { supabase, testSupabaseConnection } from '../../supabase-config.js';
-import Nav from '../Component/Nav';
-import Table from '../Component/Table';
+import Nav from '../Component/Nav.jsx';
+import Table from '../Component/Table.jsx';
 
 function ListSekolah() {
   useEffect(() => {

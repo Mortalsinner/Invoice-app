@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { jsPDF } from "jspdf";
 import autoTable from 'jspdf-autotable';
 import config from '../../supabase-config';
-import AddSekolah from '../Page/AddSekolah';
+import AddSekolah from '../PageSekolah/AddSekolah';
 
 
 const Table = () => {
