@@ -18,9 +18,9 @@ function HomeInvoice() {
   return (
     <div className="flex h-screen bg-gray-100">
       <Nav />
-      <div className="flex-1 p-8 overflow-auto ml-56">
+      <div className="flex-1 p-8 overflow-auto ">
         <Routes>
-          <Route path="/" element={<Sekolah />} />
+          <Route path="/ListSekolah" element={<Sekolah />} />
           <Route path="/AddSekolah" element={<AddSekolah />} />
         </Routes>
       </div>

@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { jsPDF } from "jspdf";
 import autoTable from 'jspdf-autotable';
 import config from '../../supabase-config';
+import AddSekolah from '../Page/AddSekolah';
 
 
 const Table = () => {
@@ -85,7 +86,7 @@ const Table = () => {
         />
         <div className="flex gap-2 md:ml-auto">
           <button
-            onClick={() => window.location.href = '/add-sekolah'}
+            onClick={() => window.location.href = '/AddSekolah'}
             className="px-4 py-2 rounded-lg bg-green-600 text-white font-semibold hover:bg-green-700 transition"
           >
             Add Sekolah
