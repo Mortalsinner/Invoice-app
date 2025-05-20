@@ -38,6 +38,7 @@ const AddTermin = () => {
         HargaTer: Number(item.HargaTer),
         Deadline,
         qty: Number(qty),
+        StatusTermin: "Belum Lunas"
       }));
       const { error } = await config
         .from("Table_Termin")

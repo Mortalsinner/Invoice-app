@@ -203,6 +203,17 @@ const Table = () => {
                             Add Termin
                           </button>
                         </Link>
+                        <Link to={`/UbahStatusTermin/${item.Kode_Sekolah}`}>
+                          <button
+                            className="w-full flex items-center gap-2 text-left px-4 py-2 hover:bg-green-100 text-green-700 transition-colors"
+                            onClick={() => setOpenDropdown(null)}
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Cek Status termin
+                          </button>
+                        </Link>
                         <button
                           onClick={() => { handleDelete(item.Kode_Sekolah); setOpenDropdown(null); }}
                           className="w-full flex items-center gap-2 text-left px-4 py-2 hover:bg-red-100 text-red-700 transition-colors"

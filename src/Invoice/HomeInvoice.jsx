@@ -12,6 +12,7 @@ import AddSekolah from './PageSekolah/AddSekolah.jsx';
 import Dashboard from './PageDashboard/Dashboard.jsx';
 import EditSekolah from './PageSekolah/EditSekolah.jsx';
 import AddTermin from "./PageSekolah/AddTermin.jsx";
+import UbahStatusTermin from "./PageSekolah/UbahStatusTermin.jsx";
 
 function HomeInvoice() {
   useEffect(() => {
@@ -28,6 +29,7 @@ function HomeInvoice() {
           <Route path="/AddSekolah" element={<AddSekolah />} />
           <Route path="/EditSekolah/:Kode_Sekolah" element={<EditSekolah />} />
           <Route path="/AddTermin/:Kode_Sekolah" element={<AddTermin />} />
+          <Route path="/UbahStatusTermin/:Kode_Sekolah" element={<UbahStatusTermin />} />
         </Routes>
       </div>
     </div>
