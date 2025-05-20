@@ -174,7 +174,7 @@ const Table = () => {
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v.01M12 12v.01M12 18v.01" />
                       </svg>
-                      Aksi
+                      Menu
                       <svg className={`w-4 h-4 transform transition-transform duration-200 ${openDropdown === item.Kode_Sekolah ? "rotate-180" : ""}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                       </svg>
