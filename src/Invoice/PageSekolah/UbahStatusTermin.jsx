@@ -29,14 +29,36 @@ const UbahStatusTermin = () => {
     setLoading(false);
   }
 
-  const handleStatusChange = async (id, newStatus) => {
+  // Tambahkan fungsi ini di luar komponen UbahStatusTermin
+  async function updateStatusPembayaranSekolah(Kode_Sekolah) {
+    // Ambil semua termin untuk sekolah ini
+    const { data, error } = await config
+      .from("Table_Termin")
+      .select("StatusTermin")
+      .eq("Kode_Sekolah", Kode_Sekolah);
+  
+    if (error) return;
+  
+    // Cek apakah semua termin sudah lunas
+    const semuaLunas = data.length > 0 && data.every(item => item.StatusTermin === "Lunas");
+  
+    // Update status pembayaran di Table_Sekolah
+    await config
+      .from("Table_Sekolah")
+      .update({ StatusPembayaran: semuaLunas ? "Lunas" : "Belum Lunas" })
+      .eq("Kode_Sekolah", Kode_Sekolah);
+  }
+
+  const handleStatusChange = async (Kode_Termin, newStatus) => {
     setLoading(true);
     try {
       const { error } = await config
         .from("Table_Termin")
         .update({ StatusTermin: newStatus })
-        .eq("id", id);
+        .eq("Kode_Termin", Kode_Termin);
       if (error) throw error;
+      // Panggil update status pembayaran setelah update termin
+      await updateStatusPembayaranSekolah(Kode_Sekolah);
       Swal.fire("Sukses", "Status termin berhasil diubah!", "success");
       fetchTermin();
     } catch (err) {
@@ -64,7 +86,7 @@ const UbahStatusTermin = () => {
           </thead>
           <tbody>
             {terminList.map((item) => (
-              <tr key={item.id}>
+              <tr key={item.Kode_Termin}>
                 <td className="py-3 px-4">{item.Termin}</td>
                 <td className="py-3 px-4">Rp {item.HargaTer?.toLocaleString("id-ID")}</td>
                 <td className="py-3 px-4">
@@ -75,7 +97,7 @@ const UbahStatusTermin = () => {
                 <td className="py-3 px-4">
                   <select
                     value={item.StatusTermin || "Belum Lunas"}
-                    onChange={(e) => handleStatusChange(item.id, e.target.value)}
+                    onChange={(e) => handleStatusChange(item.Kode_Termin, e.target.value)}
                     className="border rounded px-2 py-1"
                   >
                     <option value="Lunas">Lunas</option>
