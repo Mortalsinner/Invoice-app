@@ -17,6 +17,7 @@ const Table = () => {
   const Swal = require('sweetalert2');
   const itemsPerPage = 10;
   const [loading, setLoading] = useState(true);
+  const [openDropdown, setOpenDropdown] = useState(null);
 
   useEffect(() => {
     fetchSekolah();
@@ -138,8 +139,8 @@ const Table = () => {
           </button>
         </div>
       </div>
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden">
+      <div className="">
+        <table className="min-w-full bg-white border border-gray-200 rounded-lg overflow-x-auto">
           <thead>
             <tr className="bg-[#10365B] text-white">
               <th className="py-3 px-4 font-semibold text-sm uppercase">Kode Sekolah</th>
@@ -161,18 +162,58 @@ const Table = () => {
                   </span>
                 </td>
                 <td className="p-3 text-center">
-                  <div className="flex justify-center gap-2">
-                    <Link to={`/EditSekolah/${item.Kode_Sekolah}`}>
-                      <button className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-gray-400 transition-colors">
-                        Edit
-                      </button>
-                    </Link>
+                  <div
+                    className="relative flex justify-center"
+                    onMouseEnter={() => setOpenDropdown(item.Kode_Sekolah)}
+                    onMouseLeave={() => setOpenDropdown(null)}
+                  >
                     <button
-                      onClick={() => handleDelete(item.Kode_Sekolah)}
-                      className="px-3 py-1 bg-red-600 text-white rounded hover:bg-gray-400 transition-colors"
+                      className="flex items-center gap-2 px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      tabIndex={0}
                     >
-                      Delete
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v.01M12 12v.01M12 18v.01" />
+                      </svg>
+                      Aksi
+                      <svg className={`w-4 h-4 transform transition-transform duration-200 ${openDropdown === item.Kode_Sekolah ? "rotate-180" : ""}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
                     </button>
+                    {openDropdown === item.Kode_Sekolah && (
+                      <div className="absolute z-50 right-0 mt-2 w-40 bg-white border border-gray-200 rounded shadow-lg animate-fade-in">
+                        <Link to={`/EditSekolah/${item.Kode_Sekolah}`}>
+                          <button
+                            className="w-full flex items-center gap-2 text-left px-4 py-2 hover:bg-yellow-100 text-yellow-700 transition-colors"
+                            onClick={() => setOpenDropdown(null)}
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536M9 13l6-6m2 2l-6 6m-2 2h6" />
+                            </svg>
+                            Edit
+                          </button>
+                        </Link>
+                        <Link to={`/AddTermin/${item.Kode_Sekolah}`}>
+                          <button
+                            className="w-full flex items-center gap-2 text-left px-4 py-2 hover:bg-blue-100 text-blue-700 transition-colors"
+                            onClick={() => setOpenDropdown(null)}
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                            </svg>
+                            Add Termin
+                          </button>
+                        </Link>
+                        <button
+                          onClick={() => { handleDelete(item.Kode_Sekolah); setOpenDropdown(null); }}
+                          className="w-full flex items-center gap-2 text-left px-4 py-2 hover:bg-red-100 text-red-700 transition-colors"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                          Delete
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </td>
               </tr>
