@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const AddSekolah = () => {
   const [namaSekolah, setNamaSekolah] = useState("");
-  const [Harga, setHarga] = useState("");
+  // Hapus state Harga
   const [StatusPembayaran, setStatusPembayaran] = useState("Belum Lunas");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const AddSekolah = () => {
     try {
       const { error } = await config
         .from("Table_Sekolah")
-        .insert([{ namaSekolah, Harga: Number(Harga), StatusPembayaran }]);
+        .insert([{ namaSekolah, StatusPembayaran }]);
       if (error) throw error;
       await Swal.fire({
         title: "Sukses",
@@ -28,7 +28,6 @@ const AddSekolah = () => {
         buttonsStyling: false
       });
       setNamaSekolah("");
-      setHarga("");
       setStatusPembayaran("Belum Lunas");
       navigate("/ListSekolah");
     } catch (err) {
@@ -59,18 +58,7 @@ const AddSekolah = () => {
             required
           />
         </div>
-        <div>
-          <label className="block mb-1 font-semibold text-gray-700">Harga</label>
-          <input
-            type="number"
-            value={Harga}
-            onChange={(e) => setHarga(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10365B]"
-            required
-            min={0}
-          />
-        </div>
-        
+        {/* Hapus input Harga */}
         <button
           type="submit"
           disabled={loading}
