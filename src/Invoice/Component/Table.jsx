@@ -112,10 +112,10 @@ const Table = () => {
 
       autoTable(doc, {
         head: [["Kode Sekolah", "Nama Sekolah", "Harga", "Status Pembayaran"]],
-        body: sekolahData.map(item => [
+        body: filteredItems.map(item => [
           item.Kode_Sekolah,
           item.namaSekolah,
-          `Rp ${item.Harga?.toLocaleString('id-ID')}`,
+          `Rp ${hargaTotal[item.Kode_Sekolah]?.toLocaleString('id-ID') || 0}`,
           item.StatusPembayaran
         ]),
         startY: 40,
@@ -168,7 +168,7 @@ const Table = () => {
           </thead>
           <tbody>
             {displayedItems.map((item, index) => (
-              <tr key={item.Kode_Sekolah + index} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
+              <tr key={item.Kode_Sekolah} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
                 <td className="py-3 px-4">{item.Kode_Sekolah}</td>
                 <td className="py-3 px-4">{item.namaSekolah}</td>
                 <td className="py-3 px-4">
