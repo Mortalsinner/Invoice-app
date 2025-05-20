@@ -7,8 +7,6 @@ const EditSekolah = () => {
   const { Kode_Sekolah } = useParams();
   const navigate = useNavigate();
   const [namaSekolah, setNamaSekolah] = useState("");
-  const [Harga, setHarga] = useState("");
-  const [StatusPembayaran, setStatusPembayaran] = useState("Lunas");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,13 +19,11 @@ const EditSekolah = () => {
     try {
       const { data, error } = await config
         .from("Table_Sekolah")
-        .select("namaSekolah, Harga, StatusPembayaran")
+        .select("namaSekolah")
         .eq("Kode_Sekolah", Kode_Sekolah)
         .single();
       if (error) throw error;
       setNamaSekolah(data.namaSekolah || "");
-      setHarga(data.Harga || "");
-      setStatusPembayaran(data.StatusPembayaran || "Lunas");
     } catch (err) {
       Swal.fire("Gagal", err.message, "error");
     }
@@ -41,9 +37,7 @@ const EditSekolah = () => {
       const { error } = await config
         .from("Table_Sekolah")
         .update({
-          namaSekolah,
-          Harga: Number(Harga),
-          StatusPembayaran,
+          namaSekolah
         })
         .eq("Kode_Sekolah", Kode_Sekolah);
       if (error) throw error;
@@ -68,29 +62,6 @@ const EditSekolah = () => {
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10365B]"
             required
           />
-        </div>
-        <div>
-          <label className="block mb-1 font-semibold text-gray-700">Harga</label>
-          <input
-            type="number"
-            value={Harga}
-            onChange={(e) => setHarga(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10365B]"
-            required
-            min={0}
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-semibold text-gray-700">Status Pembayaran</label>
-          <select
-            value={StatusPembayaran}
-            onChange={(e) => setStatusPembayaran(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10365B]"
-            required
-          >
-            <option value="Lunas">Lunas</option>
-            <option value="Belum Lunas">Belum Lunas</option>
-          </select>
         </div>
         <button
           type="submit"

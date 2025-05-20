@@ -13,21 +13,21 @@ const menuItems = [
     ),
   },
   {
+    label: 'Sekolah',
+    path: '/ListSekolah',
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="#fff" strokeWidth="2" viewBox="0 0 24 24">
+        <path d="M12 3L2 9l10 6 10-6-10-6zm0 13v5m-6-5v5m12-5v5" />
+      </svg>
+    ),
+  },
+  {
     label: 'Invoice',
     path: '/invoice',
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="#fff" strokeWidth="2" viewBox="0 0 24 24">
         <rect x="4" y="4" width="16" height="16" rx="2" />
         <path d="M8 2v4M16 2v4M4 10h16" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Sekolah',
-    path: '/ListSekolah',
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="#fff" strokeWidth="2" viewBox="0 0 24 24">
-        <path d="M12 3L2 9l10 6 10-6-10-6zm0 13v5m-6-5v5m12-5v5" />
       </svg>
     ),
   },
