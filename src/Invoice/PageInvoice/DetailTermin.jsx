@@ -14,6 +14,16 @@ const DetailTermin = () => {
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    // Jika terminList sudah ada dan selectedTermin berubah, update detail
+    if (terminList.length > 0 && selectedTermin !== null) {
+      const found = terminList.find((t) => String(t.Kode_Termin) === String(selectedTermin));
+      setDetail(found || null);
+    } else {
+      setDetail(null);
+    }
+  }, [selectedTermin, terminList]);
+
   async function fetchTerminList() {
     setLoading(true);
     try {
@@ -24,8 +34,7 @@ const DetailTermin = () => {
       if (error) throw error;
       setTerminList(data || []);
       if (data && data.length > 0) {
-        setSelectedTermin(data[0].id); // pilih termin pertama secara default
-        setDetail(data[0]);
+        setSelectedTermin(data[0].Kode_Termin); // pilih termin pertama secara default
       }
     } catch (err) {
       setTerminList([]);
@@ -35,10 +44,7 @@ const DetailTermin = () => {
   }
 
   const handleChange = (e) => {
-    const id = e.target.value;
-    setSelectedTermin(id);
-    const found = terminList.find((t) => String(t.id) === String(id));
-    setDetail(found);
+    setSelectedTermin(String(e.target.value));
   };
 
   return (
@@ -58,8 +64,8 @@ const DetailTermin = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10365B]"
             >
               {terminList.map((termin) => (
-                <option key={termin.id} value={termin.id}>
-                  Termin {termin.NamaTermin || termin.id}
+                <option key={termin.Kode_Termin} value={termin.Kode_Termin}>
+                  Termin {termin.NamaTermin || termin.Termin || termin.Kode_Termin}
                 </option>
               ))}
             </select>
@@ -69,7 +75,7 @@ const DetailTermin = () => {
               <div className="flex justify-between mb-4">
                 <div>
                   <div className="font-bold text-lg text-[#10365B]">INVOICE</div>
-                  <div className="text-sm text-gray-600">No. Termin: {detail.Kode_Termin}</div>
+                  <div className="text-sm text-gray-600">No. {detail.Kode_Termin}</div>
                 </div>
                 <div className="text-right">
                   <div className="font-semibold">Tanggal Jatuh Tempo:</div>
@@ -78,7 +84,7 @@ const DetailTermin = () => {
               </div>
               <hr className="mb-4" />
               <div className="mb-2">
-                <span className="font-semibold">Nama Termin:</span> {detail.NamaTermin}
+                <span className="font-semibold">Nama Termin:</span> Termin {detail.Termin} Pembuatan buku Tahunan {detail.namaSekolah}
               </div>
               <div className="mb-2">
                 <span className="font-semibold">Status:</span> {detail.StatusTermin}
