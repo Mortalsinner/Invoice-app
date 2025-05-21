@@ -88,12 +88,20 @@ const InvoiceTemplate = () => {
           <p className="text-xs text-gray-500">Tanggal: {tanggal}</p>
         </div>
       </div>
-      <div className="mb-6">
-        <h2 className="text-lg font-semibold text-[#10365B]">Kepada:</h2>
-        <p className="text-base">{sekolah?.namaSekolah}
-        </p>
-        <p className="text-sm text-gray-500">FOR : <br />
-        Project Yearbook P.O #{sekolah?.Kode_Sekolah}:</p>
+      <div className="mb-6 flex flex-col md:flex-row md:justify-between md:items-start gap-8">
+        <div className="flex-1">
+          <h2 className="text-lg font-semibold text-[#10365B]">Kepada:</h2>
+          <p className="text-base">{sekolah?.namaSekolah}</p>
+          <p className="text-sm text-gray-500">
+            FOR : <br />
+            Project Yearbook P.O #{sekolah?.Kode_Sekolah}:
+          </p>
+        </div>
+        <div className="flex-1 md:text-right text-sm text-gray-700 whitespace-pre-line">
+          Rawa Buntu Utara Blok H2 No.7{"\n"}
+          Serpong – Tangerang Selatan{"\n"}
+          Phone +62 822 9800 8994
+        </div>
       </div>
       <div className="mb-6">
         <label className="block mb-1 font-semibold text-gray-700">Pilih Termin</label>
