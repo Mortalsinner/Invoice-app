@@ -14,10 +14,9 @@
     left: 0;
     top: 0;
     width: 100vw;
-    background: white;
-    box-shadow: none;
   }
-  .print\:hidden {
+  /* Sembunyikan tombol print, dropdown, dll */
+  button, select, label {
     display: none !important;
   }
 }
