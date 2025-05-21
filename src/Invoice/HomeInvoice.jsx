@@ -13,6 +13,8 @@ import Dashboard from './PageDashboard/Dashboard.jsx';
 import EditSekolah from './PageSekolah/EditSekolah.jsx';
 import AddTermin from "./PageSekolah/AddTermin.jsx";
 import UbahStatusTermin from "./PageSekolah/UbahStatusTermin.jsx";
+import ListInvoice from "./PageInvoice/ListInvoice.jsx";
+import DetailTermin from "./PageInvoice/DetailTermin.jsx";
 
 function HomeInvoice() {
   useEffect(() => {
@@ -30,6 +32,8 @@ function HomeInvoice() {
           <Route path="/EditSekolah/:Kode_Sekolah" element={<EditSekolah />} />
           <Route path="/AddTermin/:Kode_Sekolah" element={<AddTermin />} />
           <Route path="/UbahStatusTermin/:Kode_Sekolah" element={<UbahStatusTermin />} />
+          <Route path="/ListInvoice" element={<ListInvoice />} />
+          <Route path="/DetailTermin/:Kode_Sekolah" element={<DetailTermin />} />
         </Routes>
       </div>
     </div>
