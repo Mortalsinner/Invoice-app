@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import config from "../../supabase-config";
-import { Pie } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-ChartJS.register(ArcElement, Tooltip, Legend);
+import { Bar } from "react-chartjs-2";
+import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from "chart.js";
+ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const Dashboard = () => {
   const [totalSekolah, setTotalSekolah] = useState(0);
@@ -38,6 +38,7 @@ const Dashboard = () => {
     labels: ["Lunas", "Belum Lunas"],
     datasets: [
       {
+        label: "Jumlah Sekolah",
         data: [lunasCount, belumLunasCount],
         backgroundColor: ["#22c55e", "#ef4444"],
         borderWidth: 1,
@@ -45,16 +46,47 @@ const Dashboard = () => {
     ],
   };
 
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: { enabled: true }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        precision: 0
+      }
+    }
+  };
+
   return (
-    <div className="w-full max-w-xl mx-auto bg-white rounded-xl shadow-lg p-8 mt-8">
-      <h2 className="text-2xl font-bold mb-6 text-[#10365B]">Dashboard</h2>
-      <div className="flex flex-col items-center">
+    <div className="w-full max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mt-8 mr-8">
+      {/* Card Total Sekolah */}
+      <div className="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center">
         <div className="text-lg font-semibold mb-2 text-gray-700">Total Sekolah</div>
-        <div className="text-5xl font-bold text-[#10365B] mb-4">
+        <div className="text-5xl font-bold text-[#10365B] mb-2">
           {loading ? "Loading..." : totalSekolah}
         </div>
-        <div className="w-64 h-64 mt-6">
-          <Pie data={chartData} />
+      </div>
+      {/* Card Lunas */}
+      <div className="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center">
+        <div className="text-lg font-semibold mb-2 text-gray-700">Sekolah Lunas</div>
+        <div className="text-5xl font-bold text-green-600 mb-2">
+          {loading ? "Loading..." : lunasCount}
+        </div>
+      </div>
+      {/* Card Belum Lunas */}
+      <div className="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center">
+        <div className="text-lg font-semibold mb-2 text-gray-700">Sekolah Belum Lunas</div>
+        <div className="text-5xl font-bold text-red-600 mb-2">
+          {loading ? "Loading..." : belumLunasCount}
+        </div>
+      </div>
+      {/* Card Chart */}
+      <div className="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center md:col-span-3">
+        <div className="w-full md:w-1/2 h-64 mx-auto">
+          <Bar data={chartData} options={chartOptions} />
         </div>
         <div className="flex justify-center gap-8 mt-4">
           <div className="flex items-center gap-2">
