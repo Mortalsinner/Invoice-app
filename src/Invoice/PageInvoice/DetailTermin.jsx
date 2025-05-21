@@ -8,11 +8,27 @@ const DetailTermin = () => {
   const [selectedTermin, setSelectedTermin] = useState(null);
   const [detail, setDetail] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [namaSekolah, setNamaSekolah] = useState(""); // Tambahkan state untuk nama sekolah
 
   useEffect(() => {
     fetchTerminList();
+    fetchNamaSekolah(); // Panggil fetch nama sekolah saat mount
     // eslint-disable-next-line
   }, []);
+
+  async function fetchNamaSekolah() {
+    try {
+      const { data, error } = await config
+        .from("Table_Sekolah")
+        .select("namaSekolah")
+        .eq("Kode_Sekolah", Kode_Sekolah)
+        .single();
+      if (error) throw error;
+      setNamaSekolah(data?.namaSekolah || "");
+    } catch (err) {
+      setNamaSekolah("");
+    }
+  }
 
   useEffect(() => {
     // Jika terminList sudah ada dan selectedTermin berubah, update detail
@@ -50,6 +66,12 @@ const DetailTermin = () => {
   return (
     <div className="w-full max-w-lg mx-auto bg-white rounded-xl shadow-lg p-8 mt-8">
       <h2 className="text-2xl font-bold mb-6 text-[#10365B]">Invoice Termin</h2>
+      <button
+        onClick={() => window.print()}
+        className="mb-4 px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition print:hidden"
+      >
+        Print Invoice
+      </button>
       {loading ? (
         <div>Loading...</div>
       ) : terminList.length === 0 ? (
@@ -61,7 +83,7 @@ const DetailTermin = () => {
             <select
               value={selectedTermin}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10365B]"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10365B] print:hidden"
             >
               {terminList.map((termin) => (
                 <option key={termin.Kode_Termin} value={termin.Kode_Termin}>
@@ -71,11 +93,12 @@ const DetailTermin = () => {
             </select>
           </div>
           {detail && (
-            <div className="border rounded-lg p-6 bg-gray-50 shadow invoice-format">
+            <div id="invoice-print-area" className="border rounded-lg p-6 bg-gray-50 shadow invoice-format">
               <div className="flex justify-between mb-4">
                 <div>
                   <div className="font-bold text-lg text-[#10365B]">INVOICE</div>
                   <div className="text-sm text-gray-600">No. {detail.Kode_Termin}</div>
+                  <div className="text-sm text-gray-600">Nama Sekolah: {namaSekolah}</div>
                 </div>
                 <div className="text-right">
                   <div className="font-semibold">Tanggal Jatuh Tempo:</div>
@@ -84,18 +107,17 @@ const DetailTermin = () => {
               </div>
               <hr className="mb-4" />
               <div className="mb-2">
-                <span className="font-semibold">Nama Termin:</span> Termin {detail.Termin} Pembuatan buku Tahunan {detail.namaSekolah}
+                <span className="font-semibold">Nama Termin:</span> Termin {detail.Termin} Pembuatan buku Tahunan {namaSekolah}
               </div>
               <div className="mb-2">
                 <span className="font-semibold">Status:</span> {detail.StatusTermin}
               </div>
               <div className="mb-2">
-                <span className="font-semibold">Kode Sekolah:</span> {detail.Kode_Sekolah}
+                <span className="font-semibold">For Project Yearbook P.O:</span> {detail.Kode_Sekolah}
               </div>
               <div className="mb-2">
                 <span className="font-semibold">Harga:</span> <span className="text-[#10365B] font-bold">Rp {Number(detail.HargaTer).toLocaleString("id-ID")}</span>
               </div>
-              {/* Tambahkan field lain sesuai kebutuhan */}
               <hr className="my-4" />
               <div className="text-right font-semibold text-[#10365B]">
                 Total: Rp {Number(detail.HargaTer).toLocaleString("id-ID")}
