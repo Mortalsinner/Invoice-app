@@ -3,22 +3,13 @@
 @tailwind utilities;
 
 @media print {
-  body * {
-    visibility: hidden;
-  }
-  #invoice-print-area, #invoice-print-area * {
-    visibility: visible;
-  }
-  #invoice-print-area {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100vw;
-  }
-  /* Sembunyikan tombol print, dropdown, dll */
-  button, select, label {
-    display: none !important;
-  }
+  body * { visibility: hidden; }
+  #invoice-print-area, #invoice-print-area * { visibility: visible; }
+  #invoice-print-area { position: absolute; left: 0; top: 0; width: 100vw; }
+  button, select, label { display: none !important; }
+}
+@media print {
+  #kwitansi-print-area, #kwitansi-print-area * { visibility: visible; }
 }
 
 

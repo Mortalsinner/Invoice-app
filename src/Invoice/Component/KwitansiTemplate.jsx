@@ -70,97 +70,109 @@ const KwitansiTemplate = () => {
   }
 
   const tanggal = new Date().toLocaleDateString("id-ID");
-  const nomorKwitansi = `KWITANSI-${Kode_Sekolah}-${selectedTermin || ""}`;
+  const nomorKwitansi = `RECEIPT #${sekolah?.Kode_Sekolah || ""}`;
 
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div>
-      {/* Tombol Print */}
-      <div className="max-w-4xl mx-auto flex justify-end gap-2 mb-4 mr-10">
+    <div id="invoice-print-area" className="bg-gray-100 min-h-screen py-8 print:bg-white">
+      <div className="max-w-5xl ml-auto bg-white p-0 rounded-xl shadow-lg border border-gray-200 flex print:shadow-none print:border-none">
+        {/* Sidebar */}
+        <div className="bg-[#232323] text-white flex flex-col justify-between p-8 w-1/4 min-w-[220px] print:w-1/4">
+          <div>
+            <img src="/logo.png" alt="Logo" className="w-20 mb-6" />
+            <div className="font-bold uppercase text-sm mb-2">PARAMA HOUSE<br />BY PT. PARAMA KREATIF SUKSES</div>
+            <div className="text-xs mb-4">
+              Rawa Buntu Utara Blok H2<br />No.7 Tangerang Selatan<br />Phone: +6281294203835<br />Info.paramahouse@gmail.com
+            </div>
+            <div className="text-xs mb-4">
+              {nomorKwitansi}<br />Date: {tanggal}
+            </div>
+          </div>
+          <div className="mt-8 text-lg font-bold text-center">
+            THANK YOU<br />FOR YOUR<br />BUSINESS!
+          </div>
+        </div>
+        {/* Main Content */}
+        <div className="flex-1 p-10">
+          <div className="flex justify-between items-start mb-8">
+            <div>
+              <div className="text-3xl font-bold text-gray-700 mb-2">PAYMENT RECEIPT</div>
+              <div className="text-sm text-gray-700">
+                <div className="font-semibold">{sekolah?.namaSekolah}</div>
+                <div>{sekolah?.Alamat || "Tangerang, Banten"}</div>
+                <div>Customer ID: {sekolah?.Kode_Sekolah}</div>
+              </div>
+            </div>
+          </div>
+          {/* Paid To Table */}
+          <table className="w-full mb-6 border border-gray-300">
+            <thead>
+              <tr className="bg-gray-700 text-white text-sm">
+                <th className="py-2 px-4 w-1/2">PAID TO</th>
+                <th className="py-2 px-4 w-1/2">DATE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="bg-white text-sm">
+                <td className="py-2 px-4">
+                  BCA<br />883-1088-028<br />a/n Parama Kreatif Sukses PT.
+                </td>
+                <td className="py-2 px-4 align-top">{tanggal}</td>
+              </tr>
+            </tbody>
+          </table>
+          {/* Description Table */}
+          <table className="w-full mb-6 border border-gray-300">
+            <thead>
+              <tr className="bg-gray-700 text-white text-sm">
+                <th className="py-2 px-4 w-2/3">DESCRIPTION</th>
+                <th className="py-2 px-4 w-1/3">AMOUNT</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="bg-white text-sm">
+                <td className="py-2 px-4">
+                  {detailTermin ? (
+                    <>
+                      Termin {detailTermin.Termin} Pembuatan Buku Tahunan {sekolah?.namaSekolah} {new Date().getFullYear()}
+                    </>
+                  ) : "-"}
+                </td>
+                <td className="py-2 px-4 font-bold">
+                  Rp {Number(detailTermin?.HargaTer || 0).toLocaleString("id-ID")},-
+                </td>
+              </tr>
+              <tr className="bg-white text-sm">
+                <td className="py-2 px-4 text-right font-semibold">DISCOUNT</td>
+                <td className="py-2 px-4">Rp 0,-</td>
+              </tr>
+              <tr className="bg-white text-sm">
+                <td className="py-2 px-4 text-right font-semibold">SALES TAX</td>
+                <td className="py-2 px-4">Rp 0,-</td>
+              </tr>
+              <tr className="bg-gray-100 text-sm">
+                <td className="py-2 px-4 text-right font-bold">TOTAL</td>
+                <td className="py-2 px-4 font-bold">Rp {Number(detailTermin?.HargaTer || 0).toLocaleString("id-ID")},-</td>
+              </tr>
+            </tbody>
+          </table>
+          <div className="flex justify-end items-end mt-12">
+            <div className="text-right">
+              <img src="/paraf.png" alt="Signature" className="h-16 mb-1 inline-block" />
+              <div className="text-xs text-gray-700">Nama</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Print Button */}
+      <div className="max-w-4xl ml-auto flex justify-end gap-2 mt-4 print:hidden">
         <button
           onClick={() => window.print()}
           className="bg-[#10365B] text-white px-4 py-2 rounded-lg shadow hover:bg-[#205080] transition"
         >
-          Print Kwitansi
+          Print Receipt
         </button>
-      </div>
-      {/* Dropdown Termin di luar card */}
-      <div className="max-w-4xl mx-auto mb-6 mr-10">
-        <label className="block mb-1 font-semibold text-gray-700">Pilih Termin</label>
-        <select
-          value={selectedTermin || ""}
-          onChange={e => setSelectedTermin(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10365B]"
-        >
-          {terminList.map((termin) => (
-            <option key={termin.Kode_Termin} value={termin.Kode_Termin}>
-              Termin {termin.Termin}
-            </option>
-          ))}
-        </select>
-      </div>
-      {/* Card Kwitansi */}
-      <div id="invoice-print-area" className="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg border border-gray-200 mr-10">
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-[#10365B]">KWITANSI</h1>
-            <p className="text-sm text-gray-500">No: {nomorKwitansi}</p>
-          </div>
-          <div className="text-right">
-            <img src="/logo.png" alt="Logo" className="w-16 h-16 mb-2" />
-            <p className="text-xs text-gray-500">Tanggal: {tanggal}</p>
-          </div>
-        </div>
-        <div className="mb-6 flex flex-col md:flex-row md:justify-between md:items-start gap-8">
-          <div className="flex-1">
-            <h2 className="text-lg font-semibold text-[#10365B]">Sudah terima dari:</h2>
-            <p className="text-base">{sekolah?.namaSekolah}</p>
-            <p className="text-sm text-gray-500">
-              Untuk pembayaran termin {detailTermin?.Termin} Project Yearbook P.O #{sekolah?.Kode_Sekolah}
-            </p>
-          </div>
-          <div className="flex-1 md:text-right text-sm text-gray-700 whitespace-pre-line">
-            Rawa Buntu Utara Blok H2 No.7{"\n"}
-            Serpong – Tangerang Selatan{"\n"}
-            Phone +62 822 9800 8994
-          </div>
-        </div>
-        {detailTermin && (
-          <table className="w-full mb-6 border border-gray-200 rounded-lg overflow-hidden">
-            <thead>
-              <tr className="bg-[#10365B] text-white">
-                <th className="py-2 px-4 text-left">Termin</th>
-                <th className="py-2 px-4 text-left">Deskripsi</th>
-                <th className="py-2 px-4 text-left">Jumlah (Rp)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="bg-gray-50">
-                <td className="py-2 px-4">{detailTermin.Termin}</td>
-                <td className="py-2 px-4">
-                  Termin {detailTermin.Termin} Pembuatan Buku Tahunan {sekolah?.namaSekolah} Tahun {new Date().getFullYear()}
-                </td>
-                <td className="py-2 px-4 font-bold">Rp {Number(detailTermin.HargaTer || 0).toLocaleString("id-ID")}</td>
-              </tr>
-            </tbody>
-          </table>
-        )}
-        <div className="text-sm text-gray-500 mt-8">
-          <p>Pembayaran diterima oleh:</p>
-          <div className="border border-gray-300 rounded-lg p-4 my-2 bg-gray-50">
-            <div className="flex items-center gap-2 mb-1">
-              <img src="/bca.png" alt="BCA" className="w-15 h-6" />
-            </div>
-            <div className="ml-2">
-              <div className="font-bold text-lg text-[#10365B]">CV. Parama Kreatif</div>
-              <div>Gading serpong, Tangerang</div>
-            </div>
-          </div>
-        </div>
-        <div className="mt-8 text-right">
-          <p className="text-xs text-gray-400">*Kwitansi ini dicetak secara otomatis oleh sistem.</p>
-        </div>
       </div>
     </div>
   );
