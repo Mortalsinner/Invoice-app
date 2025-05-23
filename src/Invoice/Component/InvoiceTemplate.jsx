@@ -3,15 +3,14 @@ import { useParams } from "react-router-dom";
 import config from "../../supabase-config";
 import { supabase } from '../../supabase-config';
 
-
 const InvoiceTemplate = () => {
   const { Kode_Sekolah } = useParams();
   const [sekolah, setSekolah] = useState(null);
   const [terminList, setTerminList] = useState([]);
   const [selectedTermin, setSelectedTermin] = useState(null);
   const [detailTermin, setDetailTermin] = useState(null);
+  const [deadline, setDeadline] = useState(null); // New state for deadline
   const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {
     fetchSekolah();
@@ -63,24 +62,21 @@ const InvoiceTemplate = () => {
     try {
       const { data, error } = await config
         .from("Table_Termin")
-        .select("*")
+        .select("*, Deadline") // Assuming 'Deadline' is the column name
         .eq("Kode_Termin", kodeTermin)
         .single();
       if (error) throw error;
       setDetailTermin(data);
+      setDeadline(data.Deadline); // Set the deadline
     } catch (err) {
       setDetailTermin(null);
+      setDeadline(null);
     }
     setLoading(false);
   }
 
   const tanggal = new Date().toLocaleDateString("id-ID");
   const nomorInvoice = `INV-${Kode_Sekolah}-${selectedTermin || ""}`;
-
-  // Fungsi export PDF dengan jspdf-invoice-template
- 
-
- 
 
   if (loading) return <div>Loading...</div>;
 
@@ -120,6 +116,7 @@ const InvoiceTemplate = () => {
           <div className="text-right">
             <img src="/logo.png" alt="Logo" className="w-16 h-16 mb-2" />
             <p className="text-xs text-gray-500">Tanggal: {tanggal}</p>
+            <p className="text-xs text-gray-500">Deadline: {deadline}</p> {/* Display deadline */}
           </div>
         </div>
         <div className="mb-6 flex flex-col md:flex-row md:justify-between md:items-start gap-8">
@@ -183,13 +180,22 @@ const InvoiceTemplate = () => {
             </div>
             <div className="ml-2">
               <div className="font-bold text-lg text-[#10365B]">497-862-4888</div>
-              <div className="font-semibold">A/n CV. Parama Kreatif</div>
+              <div className="font-semibold">A/n PT. Parama Kreatif</div>
               <div>Gading serpong, Tangerang</div>
             </div>
           </div>
         </div>
-        <div className="mt-8 text-right">
-          <p className="text-xs text-gray-400">*Invoice ini dicetak secara otomatis oleh sistem.</p>
+            <div className="mt-8">
+              <div className="flex justify-between items-center">
+                <div className="text-center">
+                  <p className="text-sm">Best Regards,</p>
+                  <div className="h-16"></div> {/* Space for signature */}
+                  <p className="text-sm">(Nama Pengirim)</p>
+                </div>
+                <div className="mt-8 text-right">
+              <p className="text-xs text-gray-400">*Invoice ini dicetak secara otomatis oleh sistem.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
