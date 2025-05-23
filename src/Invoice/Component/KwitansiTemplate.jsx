@@ -97,6 +97,20 @@ const KwitansiTemplate = () => {
         </div>
         {/* Main Content */}
         <div className="flex-1 p-10">
+          <div className="mb-6">
+            <label className="block mb-1 font-semibold text-gray-700">Pilih Termin</label>
+            <select
+              value={selectedTermin || ""}
+              onChange={e => setSelectedTermin(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10365B]"
+            >
+              {terminList.map((termin) => (
+                <option key={termin.Kode_Termin} value={termin.Kode_Termin}>
+                  Termin {termin.Termin}
+                </option>
+              ))}
+            </select>
+          </div>
           <div className="flex justify-between items-start mb-8">
             <div>
               <div className="text-3xl font-bold text-gray-700 mb-2">PAYMENT RECEIPT</div>
