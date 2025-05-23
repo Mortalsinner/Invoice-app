@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import config from "../../supabase-config";
+import { supabase } from '../../supabase-config';
+
 
 const InvoiceTemplate = () => {
   const { Kode_Sekolah } = useParams();
@@ -9,6 +11,7 @@ const InvoiceTemplate = () => {
   const [selectedTermin, setSelectedTermin] = useState(null);
   const [detailTermin, setDetailTermin] = useState(null);
   const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     fetchSekolah();
@@ -123,8 +126,7 @@ const InvoiceTemplate = () => {
           <div className="flex-1">
             <h2 className="text-lg font-semibold text-[#10365B]">Kepada:</h2>
             <p className="text-base">Bendahara</p>
-            <p className="text-base">SMKN 6 Tangerang</p>
-            <p className="text-base">Tangerang, Indonesia</p>
+            <p className="text-base">{sekolah?.namaSekolah} </p>
             <p className="text-base">+62 {sekolah?.ContactPerson || "-"}</p>
           </div>
           <div className="flex-1 md:text-right text-sm text-gray-700 whitespace-pre-line">
@@ -146,7 +148,7 @@ const InvoiceTemplate = () => {
               <tr className="bg-gray-50">
                 <td className="py-2 px-4">{detailTermin.Termin}</td>
                 <td className="py-2 px-4">
-                  Termin {detailTermin.Termin} Pembuatan Buku Tahunan {sekolah?.namaSekolah} Tahun {new Date().getFullYear()}
+                  Termin {detailTermin.Termin} {sekolah?.Deskripsi} &nbsp;{sekolah?.namaSekolah} 
                 </td>
                 <td className="py-2 px-4">Rp {Number(detailTermin.HargaTer || 0).toLocaleString("id-ID")}</td>
               </tr>
@@ -195,3 +197,4 @@ const InvoiceTemplate = () => {
 };
 
 export default InvoiceTemplate;
+
