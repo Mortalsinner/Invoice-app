@@ -19,6 +19,7 @@ const TableInvoice = () => {
   const [loading, setLoading] = useState(true);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [hargaTotal, setHargaTotal] = useState({});
+  const [Deskripsi, setDeskripsi] = useState({});
 
   useEffect(() => {
     fetchSekolah();
@@ -29,7 +30,7 @@ const TableInvoice = () => {
     try {
       const { data, error } = await config
         .from('Table_Sekolah')
-        .select('Kode_Sekolah, namaSekolah, StatusPembayaran');
+        .select('Kode_Sekolah, namaSekolah, StatusPembayaran, ContactPerson, Deskripsi');
       if (error) throw error;
 
       // Ambil semua termin sekaligus
@@ -153,8 +154,10 @@ const TableInvoice = () => {
         <table className="min-w-full bg-white border border-gray-200 rounded-lg overflow-x-auto">
           <thead>
             <tr className="bg-[#10365B] text-white">
-              <th className="py-3 px-4 font-semibold text-sm uppercase">Kode Sekolah</th>
+              {/* <th className="py-3 px-4 font-semibold text-sm uppercase">Kode Sekolah</th> */}
               <th className="py-3 px-4 font-semibold text-sm uppercase">Nama Sekolah</th>
+              <th className="py-3 px-4 font-semibold text-sm uppercase">Deskripsi</th>
+              <th className="py-3 px-4 font-semibold text-sm uppercase">Contact Person</th> 
               <th className="py-3 px-4 font-semibold text-sm uppercase">Harga</th>
               <th className="py-3 px-4 font-semibold text-sm uppercase">Status Pembayaran</th>
               <th className="py-3 px-4 font-semibold text-sm uppercase">Action</th>
@@ -163,11 +166,27 @@ const TableInvoice = () => {
           <tbody>
             {displayedItems.map((item, index) => (
               <tr key={item.Kode_Sekolah} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
-                <td className="py-3 px-4">{item.Kode_Sekolah}</td>
+                {/* <td className="py-3 px-4">{item.Kode_Sekolah}</td> */}
                 <td className="py-3 px-4">{item.namaSekolah}</td>
+                <td className="py-3 px-4">{item.Deskripsi}</td>
+                <td className="py-3 px-4">
+                  {item.ContactPerson ? (
+                    <a
+                      href={`https://wa.me/62${String(item.ContactPerson).replace(/[^0-9]/g, "")}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-green-600 underline hover:text-green-800"
+                    >
+                      {item.ContactPerson}
+                    </a>
+                  ) : (
+                    "-"
+                  )}
+                </td>
                 <td className="py-3 px-4">
                   Rp {hargaTotal[item.Kode_Sekolah]?.toLocaleString('id-ID') || 0}
                 </td>
+                
                 <td className="py-3 px-4">
                   <span className={`px-3 py-1 rounded-full text-sm font-semibold ${item.StatusPembayaran === 'Lunas' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                     {item.StatusPembayaran}

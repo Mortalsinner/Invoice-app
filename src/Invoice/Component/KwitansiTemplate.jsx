@@ -40,12 +40,14 @@ const KwitansiTemplate = () => {
     try {
       const { data, error } = await config
         .from("Table_Termin")
-        .select("Kode_Termin, Termin")
+        .select("Kode_Termin, Termin, StatusTermin") // tambahkan StatusTermin
         .eq("Kode_Sekolah", Kode_Sekolah);
       if (error) throw error;
-      setTerminList(data || []);
-      if (data && data.length > 0) {
-        setSelectedTermin(data[0].Kode_Termin);
+      // Filter hanya yang sudah lunas
+      const lunasTermin = (data || []).filter(item => item.StatusTermin === "Lunas");
+      setTerminList(lunasTermin);
+      if (lunasTermin.length > 0) {
+        setSelectedTermin(lunasTermin[0].Kode_Termin);
       }
     } catch (err) {
       setTerminList([]);

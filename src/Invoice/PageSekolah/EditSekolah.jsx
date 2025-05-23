@@ -7,6 +7,8 @@ const EditSekolah = () => {
   const { Kode_Sekolah } = useParams();
   const navigate = useNavigate();
   const [namaSekolah, setNamaSekolah] = useState("");
+  const [ContactPerson, setContactPerson] = useState("");
+  const [Deskripsi, setDeskripsi] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,11 +21,13 @@ const EditSekolah = () => {
     try {
       const { data, error } = await config
         .from("Table_Sekolah")
-        .select("namaSekolah")
+        .select("namaSekolah, ContactPerson, Deskripsi") // add ContactPerson
         .eq("Kode_Sekolah", Kode_Sekolah)
         .single();
       if (error) throw error;
       setNamaSekolah(data.namaSekolah || "");
+      setContactPerson(data.ContactPerson || ""); // set ContactPerson
+      setDeskripsi(data.Deskripsi || "");
     } catch (err) {
       Swal.fire("Gagal", err.message, "error");
     }
@@ -37,7 +41,9 @@ const EditSekolah = () => {
       const { error } = await config
         .from("Table_Sekolah")
         .update({
-          namaSekolah
+          namaSekolah,
+          ContactPerson,
+          Deskripsi
         })
         .eq("Kode_Sekolah", Kode_Sekolah);
       if (error) throw error;
@@ -61,6 +67,26 @@ const EditSekolah = () => {
             onChange={(e) => setNamaSekolah(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10365B]"
             required
+          />
+        </div>
+        <div>
+          <label className="block mb-1 font-semibold text-gray-700">Contact Person</label>
+          <input
+            type="text"
+            value={ContactPerson}
+            onChange={e => setContactPerson(e.target.value.replace(/^0+/, ""))}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10365B]"
+            required
+            placeholder="81234567890"
+          />
+        </div>
+        <div>
+          <label className="block mb-1 font-semibold text-gray-700">Deskripsi</label>
+          <textarea
+            value={Deskripsi}
+            onChange={e => setDeskripsi(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10365B]"
+            placeholder="Deskripsi sekolah (optional)"
           />
         </div>
         <button

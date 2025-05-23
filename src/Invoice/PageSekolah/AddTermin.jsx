@@ -6,9 +6,8 @@ import Swal from "sweetalert2";
 const AddTermin = () => {
   const { Kode_Sekolah } = useParams();
   const [terminList, setTerminList] = useState([
-    { Termin: "", HargaTer: "" }
+    { Termin: "", HargaTer: "", Deadline: "" }
   ]);
-  const [Deadline, setDeadline] = useState("");
   const [qty, setQty] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -20,7 +19,7 @@ const AddTermin = () => {
   };
 
   const handleAddTermin = () => {
-    setTerminList([...terminList, { Termin: "", HargaTer: "" }]);
+    setTerminList([...terminList, { Termin: "", HargaTer: "", Deadline: "" }]);
   };
 
   const handleRemoveTermin = (index) => {
@@ -36,7 +35,7 @@ const AddTermin = () => {
         Kode_Sekolah,
         Termin: item.Termin,
         HargaTer: Number(item.HargaTer),
-        Deadline,
+        Deadline: item.Deadline,
         qty: Number(qty),
         StatusTermin: "Belum Lunas"
       }));
@@ -53,8 +52,7 @@ const AddTermin = () => {
         },
         buttonsStyling: false
       });
-      setTerminList([{ Termin: "", HargaTer: "" }]);
-      setDeadline("");
+      setTerminList([{ Termin: "", HargaTer: "", Deadline: "" }]);
       setQty("");
       navigate("/ListSekolah");
     } catch (err) {
@@ -98,6 +96,16 @@ const AddTermin = () => {
                 min={0}
               />
             </div>
+            <div className="w-full">
+              <label className="block mb-1 font-semibold text-gray-700">Deadline</label>
+              <input
+                type="date"
+                value={item.Deadline}
+                onChange={(e) => handleTerminChange(idx, "Deadline", e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10365B]"
+                required
+              />
+            </div>
             {terminList.length > 1 && (
               <button
                 type="button"
@@ -115,16 +123,6 @@ const AddTermin = () => {
         >
           + Tambah Termin
         </button>
-        <div>
-          <label className="block mb-1 font-semibold text-gray-700">Deadline</label>
-          <input
-            type="date"
-            value={Deadline}
-            onChange={(e) => setDeadline(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10365B]"
-            required
-          />
-        </div>
         <div>
           <label className="block mb-1 font-semibold text-gray-700">Qty</label>
           <input

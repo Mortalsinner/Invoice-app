@@ -122,11 +122,10 @@ const InvoiceTemplate = () => {
         <div className="mb-6 flex flex-col md:flex-row md:justify-between md:items-start gap-8">
           <div className="flex-1">
             <h2 className="text-lg font-semibold text-[#10365B]">Kepada:</h2>
-            <p className="text-base">{sekolah?.namaSekolah}</p>
-            <p className="text-sm text-gray-500">
-              FOR : <br />
-              Project Yearbook P.O #{sekolah?.Kode_Sekolah}:
-            </p>
+            <p className="text-base">Bendahara</p>
+            <p className="text-base">SMKN 6 Tangerang</p>
+            <p className="text-base">Tangerang, Indonesia</p>
+            <p className="text-base">+62 {sekolah?.ContactPerson || "-"}</p>
           </div>
           <div className="flex-1 md:text-right text-sm text-gray-700 whitespace-pre-line">
             Rawa Buntu Utara Blok H2 No.7{"\n"}
