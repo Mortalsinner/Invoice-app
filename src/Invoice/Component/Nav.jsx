@@ -22,7 +22,7 @@ const menuItems = [
     ),
   },
   {
-    label: 'Invoice',
+    label: 'Pembayaran',
     path: '/ListInvoice',
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="#fff" strokeWidth="2" viewBox="0 0 24 24">

@@ -131,7 +131,7 @@ const TableInvoice = () => {
 
   return (
     <div className="w-full max-w-5xl mx-auto bg-white rounded-xl shadow-lg p-8 mt-8">
-      <h2 className="text-2xl font-bold mb-6 text-[#10365B]">List Sekolah</h2>
+      <h2 className="text-2xl font-bold mb-6 text-[#10365B]">List Pembayaran</h2>
       <div className="flex flex-col md:flex-row md:items-center md:gap-4 mb-6">
         <input
           type="text"
@@ -141,12 +141,6 @@ const TableInvoice = () => {
           className="w-full md:w-1/2 mb-3 md:mb-0 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10365B] transition"
         />
         <div className="flex gap-2 md:ml-auto">
-          <button
-            onClick={() => window.location.href = '/AddSekolah'}
-            className="px-4 py-2 rounded-lg bg-green-600 text-white font-semibold hover:bg-green-700 transition"
-          >
-            Add Sekolah
-          </button>
           <button
             onClick={generatePDF}
             className="px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
@@ -208,6 +202,17 @@ const TableInvoice = () => {
                               <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536M9 13l6-6m2 2l-6 6m-2 2h6" />
                             </svg>
                             Detail Invoice
+                          </button>
+                       </Link>
+                       <Link to={`/KwitansiTemplate/${item.Kode_Sekolah}`}>
+                          <button
+                            className="w-full flex items-center gap-2 text-left px-4 py-2 hover:bg-yellow-100 text-yellow-700 transition-colors"
+                            onClick={() => setOpenDropdown(null)}
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536M9 13l6-6m2 2l-6 6m-2 2h6" />
+                            </svg>
+                            Detail Kwitansi
                           </button>
                        </Link>
                     </div> 
