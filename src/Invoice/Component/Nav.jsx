@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from '../../Asset/logo.png';
 import { useNavigate } from 'react-router-dom';
+import supabase from '../../supabase-config';
 
 const menuItems = [
   {
@@ -36,6 +37,11 @@ const menuItems = [
 function Nav() {
   const navigate = useNavigate();
 
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate('/login');
+  };
+
   return (
     <nav className="h-screen w-56 bg-[#10365B] text-white flex flex-col shadow-lg fixed left-0 top-0 z-50">
       <div className="py-8 px-6 flex items-center gap-3 border-b border-[#0d2946]">
@@ -54,6 +60,15 @@ function Nav() {
           </li>
         ))}
       </ul>
+      <button
+        onClick={handleLogout}
+        className="mx-6 mb-4 px-4 py-2 bg-[#10365B] hover:bg-gray-600 text-white rounded-lg transition-colors duration-200 flex items-center gap-2"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+          <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+        </svg>
+        Logout
+      </button>
       <div className="px-6 py-4 border-t border-[#0d2946] text-sm text-blue-200">
         &copy; {new Date().getFullYear()} InvoiceApp
       </div>

@@ -17,18 +17,26 @@ import ListInvoice from "./PageInvoice/ListInvoice.jsx";
 import DetailTermin from "./PageInvoice/DetailTermin.jsx";
 import InvoiceTemplate from "./Component/InvoiceTemplate.jsx";
 import KwitansiTemplate from "./Component/KwitansiTemplate.jsx";
+import { useAuth } from './Login/AuthContext.jsx';
+
 
 function HomeInvoice() {
   useEffect(() => {
     testSupabaseConnection();
   }, []);
-  
+  const { user } = useAuth();
+
+  if (!user) {
+    // Optionally, you can show a loading spinner or redirect here
+    return <div>Please login first.</div>;
+  }
+
   return (
     <div className="flex h-screen bg-gray-100">
       <Nav />
       <div className="flex-1 p-8 overflow-auto ">
         <Routes>
-        <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<Dashboard />} />
           <Route path="/ListSekolah" element={<Sekolah />} />
           <Route path="/AddSekolah" element={<AddSekolah />} />
           <Route path="/EditSekolah/:Kode_Sekolah" element={<EditSekolah />} />
@@ -43,6 +51,7 @@ function HomeInvoice() {
     </div>
   );
 }
+
 
 export default HomeInvoice;
 
