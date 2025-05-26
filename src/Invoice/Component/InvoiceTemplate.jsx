@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import config from "../../supabase-config";
 import { supabase } from '../../supabase-config';
+import TandaTangan from "../../Asset/Ttd.png";
 
 const InvoiceTemplate = () => {
   const { Kode_Sekolah } = useParams();
@@ -114,21 +115,21 @@ const InvoiceTemplate = () => {
             <p className="text-sm text-gray-500">No: {nomorInvoice}</p>
           </div>
           <div className="text-right">
-            <img src="/logo.png" alt="Logo" className="w-16 h-16 mb-2" />
+            <img src="/logo.png" alt="Logo" className="w- h-16 mb-2 ml-auto" />
             <p className="text-xs text-gray-500">Tanggal: {tanggal}</p>
             <p className="text-xs text-gray-500">Deadline: {deadline}</p> {/* Display deadline */}
           </div>
         </div>
-        <div className="mb-6 flex flex-col md:flex-row md:justify-between md:items-start gap-8">
+        <div className="mb-6 flex flex-row justify-between items-start gap-8 print:flex-row">
           <div className="flex-1">
             <h2 className="text-lg font-semibold text-[#10365B]">Kepada:</h2>
             <p className="text-base">Bendahara</p>
             <p className="text-base">{sekolah?.namaSekolah} </p>
             <p className="text-base">+62 {sekolah?.ContactPerson || "-"}</p>
           </div>
-          <div className="flex-1 md:text-right text-sm text-gray-700 whitespace-pre-line">
+          <div className="flex-1 text-right text-sm text-gray-700 whitespace-pre-line">
             Rawa Buntu Utara Blok H2 No.7{"\n"}
-            Serpong – Tangerang Selatan{"\n"}
+            BSD – Tangerang Selatan{"\n"}
             Phone +62 822 9800 8994
           </div>
         </div>
@@ -136,9 +137,9 @@ const InvoiceTemplate = () => {
           <table className="w-full mb-6 border border-gray-200 rounded-lg overflow-hidden">
             <thead>
               <tr className="bg-[#10365B] text-white">
-                <th className="py-2 px-4 text-left">Termin</th>
-                <th className="py-2 px-4 text-left">Deskripsi</th>
-                <th className="py-2 px-4 text-left">Harga</th>
+                <th className="py-2 px-4 text-center">Termin</th>
+                <th className="py-2 px-4 text-center">Deskripsi</th>
+                <th className="py-2 px-4 text-center">Harga</th>
               </tr>
             </thead>
             <tbody>
@@ -180,8 +181,8 @@ const InvoiceTemplate = () => {
             </div>
             <div className="ml-2">
               <div className="font-bold text-lg text-[#10365B]">497-862-4888</div>
-              <div className="font-semibold">A/n PT. Parama Kreatif</div>
-              <div>Gading serpong, Tangerang</div>
+              <div className="font-semibold">Parama Kreatif Sukses PT</div>
+              <div>BSD, Tangerang Selatan</div>
             </div>
           </div>
         </div>
@@ -189,8 +190,8 @@ const InvoiceTemplate = () => {
               <div className="flex justify-between items-center">
                 <div className="text-center">
                   <p className="text-sm">Best Regards,</p>
-                  <div className="h-16"></div> {/* Space for signature */}
-                  <p className="text-sm">(Nama Pengirim)</p>
+                  <div className="h-24"><img src={TandaTangan} alt="Signature" className="h-full" /></div>
+                  <p className="text-sm">Lia Dewi Aulia</p>
                 </div>
                 <div className="mt-8 text-right">
               <p className="text-xs text-gray-400">*Invoice ini dicetak secara otomatis oleh sistem.</p>

@@ -55,7 +55,7 @@ function Nav() {
         ))}
       </ul>
       <div className="px-6 py-4 border-t border-[#0d2946] text-sm text-blue-200">
-        &copy; 2024 InvoiceApp
+        &copy; {new Date().getFullYear()} InvoiceApp
       </div>
     </nav>
   );

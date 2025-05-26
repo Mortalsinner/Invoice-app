@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import config from "../../supabase-config";
+import TandaTangan from "../../Asset/Ttd.png";
 
 const KwitansiTemplate = () => {
   const { Kode_Sekolah } = useParams();
@@ -85,10 +86,10 @@ const KwitansiTemplate = () => {
             <img src="/logo.png" alt="Logo" className="w-20 mb-6" />
             <div className="font-bold uppercase text-sm mb-2">PARAMA HOUSE<br />BY PT. PARAMA KREATIF SUKSES</div>
             <div className="text-xs mb-4">
-              Rawa Buntu Utara Blok H2<br />No.7 Tangerang Selatan<br />Phone: +6281294203835<br />Info.paramahouse@gmail.com
+              Rawa Buntu Utara Blok H2<br />No.7 Tangerang Selatan<br />Phone: +62 822 9800 8994<br />Info.paramahouse@gmail.com
             </div>
             <div className="text-xs mb-4">
-              {nomorKwitansi}<br />Date: {tanggal}
+             <br />Date: {tanggal}
             </div>
           </div>
           <div className="mt-8 text-lg font-bold text-center">
@@ -117,7 +118,6 @@ const KwitansiTemplate = () => {
               <div className="text-sm text-gray-700">
                 <div className="font-semibold">{sekolah?.namaSekolah}</div>
                 <div>{sekolah?.Alamat || "Tangerang, Banten"}</div>
-                <div>Customer ID: {sekolah?.Kode_Sekolah}</div>
               </div>
             </div>
           </div>
@@ -131,10 +131,10 @@ const KwitansiTemplate = () => {
             </thead>
             <tbody>
               <tr className="bg-white text-sm">
-                <td className="py-2 px-4">
-                  BCA<br />883-1088-028<br />a/n Parama Kreatif Sukses PT.
+                <td className="py-2 px-4 text-center">
+                  BCA<br />497-862-4888<br />Parama Kreatif Sukses PT
                 </td>
-                <td className="py-2 px-4 align-top">{tanggal}</td>
+                <td className="py-2 px-4 align-top text-center">{tanggal}</td>
               </tr>
             </tbody>
           </table>
@@ -160,10 +160,6 @@ const KwitansiTemplate = () => {
                 </td>
               </tr>
               <tr className="bg-white text-sm">
-                <td className="py-2 px-4 text-right font-semibold">DISCOUNT</td>
-                <td className="py-2 px-4">Rp 0,-</td>
-              </tr>
-              <tr className="bg-white text-sm">
                 <td className="py-2 px-4 text-right font-semibold">SALES TAX</td>
                 <td className="py-2 px-4">Rp 0,-</td>
               </tr>
@@ -175,8 +171,8 @@ const KwitansiTemplate = () => {
           </table>
           <div className="flex justify-end items-end mt-12">
             <div className="text-right">
-              <img src="/paraf.png" alt="Signature" className="h-16 mb-1 inline-block" />
-              <div className="text-xs text-gray-700">Nama</div>
+              <img src={TandaTangan} alt="Signature" className="h-24 mb-1 inline-block" />
+              <div className="text-xs text-gray-700 text-center">Lia Dewi Aulia <br/> Finance</div>
             </div>
           </div>
         </div>

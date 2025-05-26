@@ -214,7 +214,7 @@ const TableInvoice = () => {
                       <div className="absolute z-50 right-0 mt-2 w-40 bg-white border border-gray-200 rounded shadow-lg animate-fade-in">
                         <Link to={`/InvoiceTemplate/${item.Kode_Sekolah}`}>
                           <button
-                            className="w-full flex items-center gap-2 text-left px-4 py-2 hover:bg-yellow-100 text-yellow-700 transition-colors"
+                            className="w-full flex items-center gap-2 text-left px-4 py-2 hover:bg-blue-100 text-blue-700 transition-colors"
                             onClick={() => setOpenDropdown(null)}
                           >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -225,7 +225,7 @@ const TableInvoice = () => {
                        </Link>
                        <Link to={`/KwitansiTemplate/${item.Kode_Sekolah}`}>
                           <button
-                            className="w-full flex items-center gap-2 text-left px-4 py-2 hover:bg-yellow-100 text-yellow-700 transition-colors"
+                            className="w-full flex items-center gap-2 text-left px-4 py-2 hover:bg-purple-100 text-purple-700 transition-colors"
                             onClick={() => setOpenDropdown(null)}
                           >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
