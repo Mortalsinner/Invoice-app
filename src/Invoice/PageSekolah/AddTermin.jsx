@@ -88,12 +88,20 @@ const AddTermin = () => {
             <div className="w-full">
               <label className="block mb-1 font-semibold text-gray-700">Harga Termin</label>
               <input
-                type="number"
-                value={item.HargaTer}
-                onChange={(e) => handleTerminChange(idx, "HargaTer", e.target.value)}
+                type="text"
+                value={item.HargaTer ? new Intl.NumberFormat('id-ID', {
+                  style: 'currency',
+                  currency: 'IDR',
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 0
+                }).format(item.HargaTer) : ''}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/[^\d]/g, '');
+                  handleTerminChange(idx, "HargaTer", value);
+                }}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10365B]"
                 required
-                min={0}
+                placeholder="Rp 0"
               />
             </div>
             <div className="w-full">
