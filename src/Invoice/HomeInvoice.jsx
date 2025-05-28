@@ -14,7 +14,6 @@ import EditSekolah from './PageSekolah/EditSekolah.jsx';
 import AddTermin from "./PageSekolah/AddTermin.jsx";
 import UbahStatusTermin from "./PageSekolah/UbahStatusTermin.jsx";
 import ListInvoice from "./PageInvoice/ListInvoice.jsx";
-import DetailTermin from "./PageInvoice/DetailTermin.jsx";
 import InvoiceTemplate from "./Component/InvoiceTemplate.jsx";
 import KwitansiTemplate from "./Component/KwitansiTemplate.jsx";
 import { useAuth } from './Login/AuthContext.jsx';
@@ -45,7 +44,6 @@ function HomeInvoice() {
           <Route path="/ListInvoice" element={<ListInvoice />} />
           <Route path="/InvoiceTemplate/:Kode_Sekolah" element={<InvoiceTemplate />} />
           <Route path="/KwitansiTemplate/:Kode_Sekolah" element={<KwitansiTemplate />} />
-          <Route path="/DetailTermin/:Kode_Sekolah" element={<DetailTermin />} />
         </Routes>
       </div>
     </div>

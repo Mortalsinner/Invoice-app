@@ -146,7 +146,7 @@ const InvoiceTemplate = () => {
               <tr className="bg-gray-50">
                 <td className="py-2 px-4">{detailTermin.Termin}</td>
                 <td className="py-2 px-4">
-                  Termin {detailTermin.Termin} {sekolah?.Deskripsi} &nbsp;{sekolah?.namaSekolah} 
+                  {sekolah?.Deskripsi} &nbsp;{sekolah?.namaSekolah} 
                 </td>
                 <td className="py-2 px-4">Rp {Number(detailTermin.HargaTer || 0).toLocaleString("id-ID")}</td>
               </tr>
