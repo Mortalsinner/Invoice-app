@@ -151,7 +151,7 @@ const KwitansiTemplate = () => {
                 <td className="py-2 px-4">
                   {detailTermin ? (
                     <>
-                      Termin {detailTermin.Termin} Pembuatan Buku Tahunan {sekolah?.namaSekolah} {new Date().getFullYear()}
+                     {sekolah?.Deskripsi} &nbsp;{sekolah?.namaSekolah} 
                     </>
                   ) : "-"}
                 </td>
